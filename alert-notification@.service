@@ -3,4 +3,4 @@ Description=triggering alert for %i
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/bash /opt/systemd-alerts.sh %i
+ExecStart=/usr/bin/bash /opt/systemd-alerts/systemd-alerts.sh %i
