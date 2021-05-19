@@ -3,6 +3,7 @@
 #spmfox@foxwd.com
 
 #Script is designed to be run by systemd, with the first argument being the failed unit.
+#Journald does not filter stderr from stdout, so we will filter the word 'systemd' from the output - this will hopefuly show only the applicable output.
 
 # This script uses the following commands:
 # curl
@@ -19,7 +20,7 @@ opt_EmailPassword=""				# Password for email
 file_AlertEmail="/dev/shm/.systemd-alerts.eml"	# Full path to the file where the email will be temporarily stored
 
 str_FailedUnit=$1
-str_FailedUnitJournal=$(journalctl -p3 --no-pager --since '2 min ago' -u $str_FailedUnit)
+str_FailedUnitJournal=$(journalctl --no-pager --since '15 sec ago' -u $str_FailedUnit |grep -v systemd)
 
 #Generate messages for Telegram and email
 str_GenerateJSON=$(cat <<EOF
