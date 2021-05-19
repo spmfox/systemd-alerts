@@ -37,7 +37,7 @@ EOF
   echo "Sending email."
   echo "From: $opt_EmailFrom" > $file_AlertEmail
   echo "To: $opt_EmailTo" >> $file_AlertEmail
-  echo "Subject: $opt_FriendlyName DNS Check Alert" >> $file_AlertEmail
+  echo "Subject: $opt_FriendlyName $str_FailedUnit Alert" >> $file_AlertEmail
   echo "" >> $file_AlertEmail
   echo $str_FailedUnitJournal >> $file_AlertEmail
   str_CurlEmail=$(curl -s --ssl-reqd smtp://$opt_EmailServer --mail-from $opt_EmailFrom --mail-rcpt $opt_EmailTo --upload-file $file_AlertEmail --user "$opt_EmailUser":"$opt_EmailPassword")
