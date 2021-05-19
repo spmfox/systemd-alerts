@@ -4,15 +4,6 @@
 
 #Script is designed to be run by systemd, with the first argument being the failed unit.
 
-str_FailedUnit=$1
-str_FailedUnitJournal=$(journalctl -p3 --no-pager --since '2 min ago' -u $str_FailedUnit)
-
-echo "Failed service: $str_FailedUnit"
-echo "Failure log:"
-echo "$str_FailedUnitJournal"
-
-
-
 opt_FriendlyName=""                             # This name will appear in the message
 opt_TelegramBotToken=""                         # Token of Telegram Bot
 opt_TelegramMessageID=""                        # ID of the Telegram conversation to post the alert to
@@ -23,6 +14,9 @@ opt_EmailUser=""				# Username for email
 opt_EmailPassword=""				# Password for email
 
 file_AlertEmail="/dev/shm/.systemd-alerts.eml"	# Full path to the file where the email will be temporarily stored
+
+str_FailedUnit=$1
+str_FailedUnitJournal=$(journalctl -p3 --no-pager --since '2 min ago' -u $str_FailedUnit)
 
 #Generate messages for Telegram and email
 str_GenerateJSON=$(cat <<EOF
