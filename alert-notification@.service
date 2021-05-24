@@ -1,5 +1,6 @@
 [Unit]
 Description=triggering alert for %i
+After=network-online.target
 
 [Service]
 Type=oneshot
