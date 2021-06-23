@@ -20,7 +20,7 @@ opt_EmailPassword=""				# Password for email
 file_AlertEmail="/dev/shm/.systemd-alerts.eml"	# Full path to the file where the email will be temporarily stored
 
 str_FailedUnit=$1
-str_FailedUnitJournal=$(journalctl --no-pager --since '15 sec ago' -u $str_FailedUnit |grep -v systemd)
+str_FailedUnitJournal=$(journalctl --no-pager --since '15 sec ago' -u $str_FailedUnit |grep -v systemd |awk -F "]:" '{print $2}')
 
 #Generate messages for Telegram and email
 str_GenerateJSON=$(cat <<EOF
