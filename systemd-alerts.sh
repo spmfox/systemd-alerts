@@ -24,7 +24,7 @@ str_FailedUnitJournal=$(journalctl --no-pager --since '15 sec ago' -u $str_Faile
 
 #Generate messages for Telegram and email
 str_GenerateJSON=$(cat <<EOF
-{"chat_id": "$opt_TelegramMessageID", "text": "$str_FailedUnitJournal"}
+{"chat_id": "$opt_TelegramMessageID", "text": "$opt_FriendlyName: $str_FailedUnitJournal"}
 EOF
 )
 
