@@ -1,4 +1,5 @@
 ---
+   scripts_directory: /opt/scripts
    friendly_name: 
    telegram_bot_token: 
    telegram_message_id: 

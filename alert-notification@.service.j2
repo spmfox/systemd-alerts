@@ -1,0 +1,7 @@
+[Unit]
+Description=triggering alert for %i
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/bash {{ scripts_directory }}/systemd-alerts.sh %i
