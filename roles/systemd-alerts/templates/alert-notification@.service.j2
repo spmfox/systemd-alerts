@@ -4,4 +4,4 @@ After=network-online.target
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/bash {{ scripts_directory }}/systemd-alerts.sh %i
+ExecStart=/usr/bin/bash {{ system.install_directory }}/systemd-alerts.sh %i

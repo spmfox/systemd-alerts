@@ -1,26 +1,43 @@
 # systemd-alerts
 
-## Why
-This is a simple systemd service and script that makes it easy to have failed systemd services email or telegram message you.
+Simple systemd service + script that will send and email or a Telegram message when it is called - useful for service failures.
 
+This can be deployed using Ansible or manually.
 
-## How
-We utilize systemd service templates. You simply add the ```OnFailure``` option to a service you care about, and if it fails then the template service will be called which will trigger the script.
+## Ansible Installation
+```ansible-playbook -i <your host> -e @your_vars.yml deploy.yml```
 
-## Example
-### Paths
-Files should be located at the following paths, or you may need to modify the way this works.
+Be sure to define your variables:
+```yaml
+system:
+  install_directory: "/opt/systemd-alerts"
+  friendly_name: "{{ ansible_fqdn }}"
+email:
+  server: ""
+  username: ""
+  password: ""
+  from: ""
+  to: ""
+telegram:
+  bot_token: ""
+  message_id: ""
 ```
-/opt/systemd-alerts/systemd-alerts.sh
-/etc/systemd/system/alert-notification@.service
-```
 
-After placing these files in the correct location, just modify a service you care about. Add the following code to the ```[Unit]``` section of the service file.
+
+## Manual Installation
+1. Copy ```roles/systemd-alerts/files/alert-notification@.service``` -> ```/etc/systemd/system/alert-notification@.service```
+2. Create directory ```/opt/systemd-alerts```
+3. Copy ```roles/systemd-alerts/files/systemd-alerts.sh``` -> ```/opt/systemd-alerts/systemd-alerts.sh```
+4. Edit ```/opt/systemd-alerts/systemd-alerts.sh``` and change the variables at the top of the file
+
+
+## Usage
+After installation, just modify a service you care about. Add the following code to the ```[Unit]``` section of the service file.
 ```
 OnFailure=alert-notification@%i.service
 ```
+You can edit your own service, or ```systemctl edit``` on an existing service to add an override.
 
-You do not need to enable the template service.
 
 ## Troubleshooting
 1. Check that the template service was run:

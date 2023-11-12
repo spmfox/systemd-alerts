@@ -1,0 +1,29 @@
+- name: Create script directory
+  ansible.builtin.file:
+    path: "{{ system.install_directory }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Deploy script
+  ansible.builtin.template:
+    src: "systemd-alerts.sh.j2"
+    dest: "{{ system.install_directory }}/systemd-alerts.sh"
+    owner: root
+    group: root
+    mode: '0600'
+
+- name: Deploy systemd service
+  ansible.builtin.template:
+    src: "alert-notification@.service.j2"
+    dest: "/etc/systemd/system/alert-notification@.service"
+    owner: root
+    group: root
+    mode: '0644'
+  register: systemd
+
+- name: Reload systemd daemon (if necessary)
+  ansible.builtin.systemd_service:
+    daemon_reload: true
+  when: systemd.changed

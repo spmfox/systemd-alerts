@@ -1,0 +1,12 @@
+system:
+  install_directory: "/opt/systemd-alerts"
+  friendly_name: "{{ ansible_fqdn }}"
+email:
+  server: ""
+  username: ""
+  password: ""
+  from: ""
+  to: ""
+telegram:
+  bot_token: ""
+  message_id: ""
